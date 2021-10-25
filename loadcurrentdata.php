@@ -8,16 +8,20 @@ $initValue = $db->query($sql)->fetchAll();
 $filesYear = array_diff(scandir("data",SCANDIR_SORT_DESCENDING), array('..', '.')); // folder ทั้งหมด
 $files = array_reverse($filesYear);
 //ได้ Folder ที่มีอยู่หาข้อมูลเดือนปัจจุบัน
+
 $month = date('m'); //เดือนปัจจุบัน
 $year = date('Y'); //ปีปัจจุบัน
 $dirx ="data/". $year . "/" . $month;
 $files3 = array_diff(scandir($dirx), array('.', '..')); 
 $files2 =  array_reverse(array_reverse($files3));
+
 if(count($files2) >1){
     //load ข้อมูลไฟล์อันสุดท้าย
     $fileName = "data/". $year . "/" . $month . "/" . $files2[0];
     //ทำการถอดข้อมูลจากชื่อไฟล์
+   
    $fileTime = explode(".",$fileName)[1];
+
    $yearx = substr($fileTime,0,4);
    $datex = substr($fileTime,4,2);
    $monthx = substr($fileTime,6,2);
@@ -42,7 +46,11 @@ if(count($files2) >1){
          }
          fclose($file);
     }
+<<<<<<< HEAD
     if($count > 890){
+=======
+    if($count >= 890){
+>>>>>>> main
         if( $file = fopen($fileName, "r") ){
             $count=0;
             //หาค่า SGmax
@@ -432,8 +440,9 @@ if(count($files2) >1){
             //ย้ายไฟล์
             $backupName = str_replace("data","backup",$fileName);
             rename($fileName,$backupName);
-
-            echo json_encode($resultFinal);
+        
+            echo $fileName;
+            // echo json_encode($resultFinal);
     } else {
         //ย้ายไฟล์
         $backupName = str_replace("data","backup",$fileName);
