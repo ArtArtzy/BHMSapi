@@ -28,7 +28,7 @@ if(count($files2) >1){
    $dateFinal = date("Y-m-d H:i:s", $d);
    $datemap = $yearx . "-" . $monthx . "-" . $datex;
    $timestmap =  strtotime($dateFinal);
-   if($hourx>=6 && $hourx<=18){
+   if($hourx>=6 && $hourx<=17){
       $duration = 0;
     } else {
       $duration = 1;
@@ -42,7 +42,7 @@ if(count($files2) >1){
          }
          fclose($file);
     }
-    if($count == 896){
+    if($count > 890){
         if( $file = fopen($fileName, "r") ){
             $count=0;
             //หาค่า SGmax
