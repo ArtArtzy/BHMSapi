@@ -46,11 +46,8 @@ if(count($files2) >1){
          }
          fclose($file);
     }
-<<<<<<< HEAD
-    if($count > 890){
-=======
+
     if($count >= 890){
->>>>>>> main
         if( $file = fopen($fileName, "r") ){
             $count=0;
             //หาค่า SGmax

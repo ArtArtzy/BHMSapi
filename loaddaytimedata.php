@@ -289,16 +289,17 @@ AVG(SG95Min) as SG95Min,
 date FROM rawdata WHERE syncDayNight = 0 and duration =1 group by date";
 $result = $db->query($sql)->fetchAll();
 $update = 0;
+$currentDate =  date("Y-d-m");
 if(sizeof($result) >0){
     // ทำการวนค่า
     //Current date YYYY-DD-MM
-    $currentDate =  date("Y-m-d");
+    
     for($i=0;$i<sizeof($result);$i++){
         //ทำการ check ว่าเป็นวันนี้หรือเปล่าว ถ้าเป็น ข้ามไป
         //ถ้าไม่ใช่ใส่ในตาราง daynightdata
         if($result[$i]['date'] != $currentDate){
             $update = 1;
-            $db->insert("daynightdata",[
+            $db->debug()->insert("daynightdata",[
                 "SG01Avg"=>$result[$i]['SG01Avg'],
                 "SG01Max"=>$result[$i]['SG01Max'],
                 "SG01Min"=>$result[$i]['SG01Min'],
@@ -587,7 +588,7 @@ if(sizeof($result) >0){
                 "duration"=>1
             ]);
             //update syncDayNight เป็น 1
-            $db->update("rawdata",["syncDayNight"=>1],[
+            $db->debug()->update("rawdata",["syncDayNight"=>1],[
                 "date"=>$result[$i]['date'],
                 "duration"=>1
             ]);
