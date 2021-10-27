@@ -584,6 +584,7 @@ if(sizeof($result) >0){
                 "SG94Min"=>$result[$i]['SG94Min'],
                 "SG95Avg"=>$result[$i]['SG95Avg'],
                 "SG95Max"=>$result[$i]['SG95Max'],
+                "SG95Min"=>$result[$i]['SG95Min'],
                 "date"=>$result[$i]['date'],
                 "duration"=>1
             ]);
