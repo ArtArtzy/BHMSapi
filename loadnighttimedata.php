@@ -286,7 +286,7 @@ AVG(SG94Min) as SG94Min,
 AVG(SG95Avg) as SG95Avg,
 AVG(SG95Max) as SG95Max,
 AVG(SG95Min) as SG95Min,
-date FROM rawdata WHERE syncDayNight = 0 and duration =0 group by date";
+date FROM rawdata WHERE syncDayNight = 0 and duration =1 group by date";
 $result = $db->query($sql)->fetchAll();
 $update = 0;
 $currentDate =  date("Y-d-m");
@@ -591,7 +591,7 @@ if(sizeof($result) >0){
             //update syncDayNight เป็น 1
             $db->update("rawdata",["syncDayNight"=>1],[
                 "date"=>$result[$i]['date'],
-                "duration"=>0
+                "duration"=>1
             ]);
         }
     }
