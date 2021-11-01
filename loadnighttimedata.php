@@ -586,7 +586,7 @@ if(sizeof($result) >0){
                 "SG95Max"=>$result[$i]['SG95Max'],
                 "SG95Min"=>$result[$i]['SG95Min'],
                 "date"=>$result[$i]['date'],
-                "duration"=>0
+                "duration"=>1
             ]);
             //update syncDayNight เป็น 1
             $db->update("rawdata",["syncDayNight"=>1],[
