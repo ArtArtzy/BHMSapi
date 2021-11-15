@@ -298,6 +298,9 @@ if(sizeof($result) >0){
         //ทำการ check ว่าเป็นวันนี้หรือเปล่าว ถ้าเป็น ข้ามไป
         //ถ้าไม่ใช่ใส่ในตาราง daynightdata
         if($result[$i]['date'] != $currentDate){
+            $datex = $result[$i]['date'];
+            $dateArray = explode("-",$datex);
+            $date2 = $dateArray[0]. "-" . $dateArray[2] . "-" . $dateArray[1];
             $update = 1;
             $db->insert("daynightdata",[
                 "SG01Avg"=>$result[$i]['SG01Avg'],
@@ -586,6 +589,7 @@ if(sizeof($result) >0){
                 "SG95Max"=>$result[$i]['SG95Max'],
                 "SG95Min"=>$result[$i]['SG95Min'],
                 "date"=>$result[$i]['date'],
+                "timestamp"=>strtotime($date2)*1000,
                 "duration"=>0
             ]);
             //update syncDayNight เป็น 1
