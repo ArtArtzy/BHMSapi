@@ -438,8 +438,8 @@ if(count($files2) >1){
             $backupName = str_replace("data","backup",$fileName);
             rename($fileName,$backupName);
         
-            echo $fileName;
-            // echo json_encode($resultFinal);
+            // echo $fileName;
+            echo json_encode($resultFinal);
     } else {
         //ย้ายไฟล์
         $backupName = str_replace("data","backup",$fileName);
