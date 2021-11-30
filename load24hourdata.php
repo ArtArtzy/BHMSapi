@@ -300,8 +300,9 @@ if(sizeof($result) >0){
             $datex = $result[$i]['date'];
             $dateArray = explode("-",$datex);
             $date2 = $dateArray[0]. "-" . $dateArray[2] . "-" . $dateArray[1];
+            
             $update = 1;
-            $db->insert("alldaydata",[
+            $db-> insert("alldaydata",[
                 "SG01Avg"=>$result[$i]['SG01Avg'],
                 "SG01Max"=>$result[$i]['SG01Max'],
                 "SG01Min"=>$result[$i]['SG01Min'],

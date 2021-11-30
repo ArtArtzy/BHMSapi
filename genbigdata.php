@@ -16,8 +16,8 @@ $data[3];
 echo "\n";
 echo $date = (new DateTime())->getTimestamp();
 echo "\n";
-echo $date= date("d-m-Y");
-$tomorrow = date('d-m-Y',strtotime($date . "+1 days"));
+echo $date= date("Y-d-m");
+$tomorrow = date('Y-d-m',strtotime($date . "+1 days"));
 echo "\n";
 echo strtotime($tomorrow);
 echo "\n";
@@ -25,7 +25,7 @@ echo $tomorrow;
 echo "\n";
 
 
-for($k=0;$k<96;$k++){
+for($k=0;$k<96;$k++){   ///       int random min max avg for strain 96 ea
     $min[$k]=float_rand(0,100);
     $max[$k]=float_rand(101,400);
     $avg[$k]=float_rand($min[$k],$max[$k]);
@@ -47,6 +47,9 @@ for($k=0;$k<96;$k++){
 
 for($d=0;$d<900;$d++){          // day
     $today = date('d-m-Y',strtotime($today . "+1 days"));
+    $dateArray = explode("-",$today);
+    $today2 = $dateArray[2]. "-" . $dateArray[0] . "-" . $dateArray[1];
+  
     // echo "\n";
     // echo $today;
     // echo " : ";
@@ -55,8 +58,8 @@ for($d=0;$d<900;$d++){          // day
             if($k==1) $dayNight=0;
             else    $dayNight=float_rand(1,10);
             // n=0 day , n=1 night
-            $db->insert('daynightdata',["timestamp"=> strtotime($today),
-            "date"=>$today,
+            $db->insert('daynightdata',["timestamp"=> strtotime($today)*1000,
+            "date"=>$today2,
             "duration"=>$k,
             "sync24"=>0,
             "SG01Avg"=> avg[1]+$d*$slope[1]+$dayNight,
