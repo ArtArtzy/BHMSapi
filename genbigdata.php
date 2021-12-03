@@ -7,7 +7,9 @@ function float_rand($min,$max){
     }
     return number_format($temp,4,'.','');
 }
-$dayuse=100;
+$dayuse=3650;
+$startDate =(new DateTime())->getTimestamp();
+
 $min[100];
 $max[100];
 $avg[100];
@@ -15,7 +17,7 @@ $slope[100];
 $data[3];
 
 echo "\n";
-echo $date = (new DateTime())->getTimestamp();
+echo $date = $startDate;
 echo "\n";
 echo $date= date("Y-d-m");
 $tomorrow = date('Y-d-m',strtotime($date . "+1 days"));
