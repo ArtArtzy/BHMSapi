@@ -7,6 +7,7 @@ function float_rand($min,$max){
     }
     return number_format($temp,4,'.','');
 }
+$dayuse=100;
 $min[100];
 $max[100];
 $avg[100];
@@ -45,7 +46,7 @@ for($k=0;$k<96;$k++){   ///       int random min max avg for strain 96 ea
 //     echo "\n\n\n";
 // }
 
-for($d=0;$d<900;$d++){          // day
+for($d=0;$d<$dayuse;$d++){          // day
     $today = date('d-m-Y',strtotime($today . "+1 days"));
     $dateArray = explode("-",$today);
     $today2 = $dateArray[2]. "-" . $dateArray[0] . "-" . $dateArray[1];
