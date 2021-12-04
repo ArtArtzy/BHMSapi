@@ -41,7 +41,7 @@ $sql = "select
 
 (SG86Min + SG87Min + SG88Min + SG89Min + SG90Min)/5 as S18Min,
 
-(SG91Min + SG92Min + SG93Min + SG94Min + SG95Min)/5 as S19Min 
+(SG91Min + SG92Min + SG93Min + SG94Min + SG95Min)/5 as S19Min , timestamp 
 from alldaydata where timestamp between ". $startTime. " and " .$endTime . " order by timestamp";
 
 $result = $db->query($sql)->fetchAll();

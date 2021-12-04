@@ -44,7 +44,7 @@ $sql = "select
 
 (SG86Max + SG87Max + SG88Max + SG89Max + SG90Max)/5 as S18Max,
 
-(SG91Max + SG92Max + SG93Max + SG94Max + SG95Max)/5 as S19Max
+(SG91Max + SG92Max + SG93Max + SG94Max + SG95Max)/5 as S19Max, timestamp  
 from alldaydata where timestamp between ". $startTime. " and " .$endTime . " order by timestamp";
 
 $result = $db->query($sql)->fetchAll();

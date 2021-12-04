@@ -29,7 +29,7 @@ $sql = "select
 (SG76Avg + SG77Avg + SG78Avg + SG79Avg + SG80Avg)/5 as S16Avg,
 (SG81Avg + SG82Avg + SG83Avg + SG84Avg + SG85Avg)/5 as S17Avg,
 (SG86Avg + SG87Avg + SG88Avg + SG89Avg + SG90Avg)/5 as S18Avg,
-(SG91Avg + SG92Avg + SG93Avg + SG94Avg + SG95Avg)/5 as S19Avg 
+(SG91Avg + SG92Avg + SG93Avg + SG94Avg + SG95Avg)/5 as S19Avg , timestamp 
 from alldaydata where timestamp between ". $startTime. " and " .$endTime . " order by timestamp";
 
 $result = $db->query($sql)->fetchAll();
