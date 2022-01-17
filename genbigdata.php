@@ -7,7 +7,7 @@ function float_rand($min,$max){
     }
     return number_format($temp,4,'.','');
 }
-$dayuse=1000;
+$dayuse=500;
 $startDate =(new DateTime())->getTimestamp();
 
 $min[100];
@@ -15,17 +15,6 @@ $max[100];
 $avg[100];
 $slope[100];
 $data[3];
-
-echo "\n";
-echo $date = $startDate;
-echo "\n";
-echo $date= date("Y-d-m");
-$tomorrow = date('Y-d-m',strtotime($date . "+1 days"));
-echo "\n";
-echo strtotime($tomorrow);
-echo "\n";
-echo $tomorrow;
-echo "\n";
 
 
 for($k=0;$k<96;$k++){   ///       int random $min $max $avg for strain 96 ea
@@ -53,6 +42,12 @@ for($k=0;$k<96;$k++){   ///       int random $min $max $avg for strain 96 ea
 //     echo "\n\n\n";
 // }
 
+// today -1 years
+$today = date('d-m-Y',strtotime($today . "-1 years"));
+$dateArray = explode("-",$today);
+$today2 = $dateArray[2]. "-" . $dateArray[0] . "-" . $dateArray[1];
+
+echo $today;
 for($d=0;$d<$dayuse;$d++){          // day
     $today = date('d-m-Y',strtotime($today . "+1 days"));
     $dateArray = explode("-",$today);
@@ -372,4 +367,6 @@ for($d=0;$d<$dayuse;$d++){          // day
     }
     
 }
+echo "end ";
+echo $today;
 ?>
