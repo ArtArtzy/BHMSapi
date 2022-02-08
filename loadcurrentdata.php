@@ -92,7 +92,9 @@ if(count($files2) >1){
                 $count++;
             }
             fclose($file);
-            $SGavg[$i] =0;
+            for($i=1;$i<=95;$i++){
+               $SGavg[$i] =0;
+               }
             //ทำการหาค่าเฉลี่ยข้อมูล
           for($i=1;$i<=95;$i++){
              if($SGSum[$i] != "NaN"){
