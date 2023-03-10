@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once('connection.php');
 //ทำการ load ข้อมูลจากตาราง Adjust
 $sql = "select * from initValue order by id";
@@ -8,10 +8,13 @@ $initValue = $db->query($sql)->fetchAll();
 //ทำการ load ข้อมูลเก่าที่ตกค้าง
 //ทำการค้นไฟล์เก่าเหลือไว้ 1 ไฟล์ล่าสุดเท่านั้น
 $filesYear = array_diff(scandir("data",SCANDIR_SORT_DESCENDING), array('..', '.')); // folder ทั้งหมด
+// print_r($filesYear);
 $files = array_reverse($filesYear);
+
 //ได้ Folder ที่มีอยู่หาข้อมูลเดือนปัจจุบัน
 $month = date('m'); //เดือนปัจจุบัน
 $year = date('Y'); //ปีปัจจุบัน
+
 for($i=0;$i<count($files);$i++){
 
    // กรณีปีน้อยกว่าปีปัจจุบันทำการ เอาเข้า Database แล้ว move ทั้งหมด
@@ -29,23 +32,30 @@ for($i=0;$i<count($files);$i++){
       }
     }
    }  else if($files[$i] == $year){
+     
     $dirx ="data/".$files[$i];
     $filesm2 = array_diff(scandir($dirx,SCANDIR_SORT_DESCENDING), array('..', '.')); 
     $files2 = array_reverse($filesm2);
     for($j=0;$j<count($files2);$j++){
         $dir2 = "data/".$files[$i] ."/" . $files2[$j];
-        $files3 = array_diff(scandir($dir2), array('.', '..'));       
+        $files3 = array_diff(scandir($dir2), array('.', '..')); 
+
+     
          if($month !=$files2[$j]){
+    
             for($k=0;$k<count($files3);$k++){
            
                $fileName =  $dir2. "/". $files3[$k+2];
+              
                readText($fileName,$db,$initValue);
                 // readText($dir2 . " /" .$files3[$k+2], $db);
               }
          } else {
+            
             for($k=0;$k<count($files3)-2;$k++){
            
                 $fileName =  $dir2. "/". $files3[$k+2];
+        
                 readText($fileName,$db,$initValue);
                 // readText($dir2 . " /" .$files3[$k+2], $db);
               }
@@ -56,6 +66,8 @@ for($i=0;$i<count($files);$i++){
 }
 
 function readText($fileName,$db,$initValue){
+   //parameter
+   $setLimitNan = 800;
    //ทำการถอดข้อมูลจากชื่อไฟล์
    $fileTime = explode(".",$fileName)[1];
    $yearx = substr($fileTime,0,4);
@@ -73,8 +85,11 @@ function readText($fileName,$db,$initValue){
     } else {
       $duration = 1;
     }
-
+    for($i=1;$i<=96;$i++){
+      $countG[$i] = 0;
+   }
     //ทำการ Check ว่าไฟล์ครบ 15 นาทีหรือเปล่าว ถ้าไม่ครบไม่เอาเลย ต้องมีค่า count เท่ากับ 896
+    echo $fileName;
     if( $file = fopen($fileName, "r") ){
         $count=0;
          while(!feof($file)) {
@@ -87,6 +102,7 @@ function readText($fileName,$db,$initValue){
             //ดึงค่าจากไฟล์
             //Check Nan
             if( $file = fopen($fileName, "r") ){
+           
             $count=0;
             while(!feof($file)) {
                 $line = fgets($file);
@@ -94,20 +110,27 @@ function readText($fileName,$db,$initValue){
                 $data = explode("	",$line);
                 if($count ==1){
                    for($l=1;$l<=95;$l++){
-                      if($data[$l] != "NaN"){
+                     $countG[$l] = 1;
+                     // echo $countG[$i];
+                     // echo "-";
+                     // echo $data[$l] . "-";
+                      if($data[$l] != "NaN" or $data[$l] != "#NUM!"){
                         $SGmax[$l] = (float)$data[$l];
                         $SGmin[$l] = (float)$data[$l];
                         $SGSum[$l] = (float)$data[$l];       
                       } else {
-                        $SGmax[$l] = "NaN";
-                        $SGmin[$l] = "NaN";
-                        $SGSum[$l] = "NaN";  
+                        $SGmax[$l] = -100;
+                        $SGmin[$l] = 100;
+                        $SGSum[$l] = 0;  
                       }
                       
                    }
                 } else{
                   for($l=1;$l<=95;$l++){
-                     if($data[$l]!="NaN"){
+                     if($data[$l]!="NaN" or $data[$l] != "#NUM!"){
+                        $countG[$l]++;
+                        // echo $countG[$l];
+                        // echo "-";
                         if((float)$SGmax[$l]< (float)$data[$l]){
                            $SGmax[$l] = (float)$data[$l];    
                         }
@@ -116,10 +139,6 @@ function readText($fileName,$db,$initValue){
                            $SGmin[$l] = (float)$data[$l];
                         }
                         $SGSum[$l] += $data[$l];
-                     } else {
-                        $SGmax[$l] = "NaN";
-                        $SGmin[$l] = "NaN";
-                        $SGSum[$l] = "NaN";
                      }                     
                   }
                 }
@@ -130,13 +149,25 @@ function readText($fileName,$db,$initValue){
       
             }
             fclose($file);
+<<<<<<< Updated upstream
             // for($i=1;$i<=95;$i++){
             // $SGavg[$i] =0;
             // }
+=======
+            // echo "xxx";
+            for($i=1;$i<=95;$i++){
+               if($countG[$i] < 894-$setLimitNan){
+                 $SGmin[$i] = "NaN";
+               }
+                  // echo $countG[$i] . "-";
+            }
+>>>>>>> Stashed changes
               //ทำการหาค่าเฉลี่ยข้อมูล
             for($i=1;$i<=95;$i++){
                if($SGSum[$i] != "NaN"){
-                  $SGavg[$i] = number_format($SGSum[$i]/($count-2),2,".","");
+                  // echo $countG[$i];
+                  // echo "-";
+                  $SGavg[$i] = number_format($SGSum[$i]/($countG[$i]),2,".","");
                } else {
                   $SGavg[$i] = "NaN";
                }
@@ -145,18 +176,25 @@ function readText($fileName,$db,$initValue){
          }
          //ทำการปรับค่า NaN เป็น -9999999
          for($i=1;$i<=95;$i++){
-            if($SGmin[$i]=="NaN"){
-               $SGmin[$i] = -9999999;
-               $SGmax[$i] = -9999999;
-               $SGavg[$i] = -9999999;
-            }
+            // if($SGmin[$i]=="NaN" && $SGmin[$i]!=0){
+            //    $SGmin[$i] = -9999999;
+            //    $SGmax[$i] = -9999999;
+            //    $SGavg[$i] = -9999999;
+            // }
+               if($SGmin[$i] == 0 && $SGmax[$i]== 0 ){
+                  $SGmin[$i] = -9999999;
+                  $SGmax[$i] = -9999999;
+                  $SGavg[$i] = -9999999;
+               }
          }
+         
          //Adjust จาก initValue
          for($i=1;$i<=95;$i++){
             $SGmin[$i] +=$initValue[$i-1]['initvalue'];
             $SGmax[$i] +=$initValue[$i-1]['initvalue'];
             $SGavg[$i] +=$initValue[$i-1]['initvalue'];
          }
+
 
          //update database
          $db->insert("rawdata",[

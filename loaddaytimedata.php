@@ -290,6 +290,7 @@ date FROM rawdata WHERE syncDayNight = 0 and duration =0 group by date";
 $result = $db->query($sql)->fetchAll();
 $update = 0;
 $currentDate =  date("Y-d-m");
+
 if(sizeof($result) >0){
     // ทำการวนค่า
     //Current date YYYY-DD-MM

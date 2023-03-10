@@ -7,11 +7,7 @@ function float_rand($min,$max){
     }
     return number_format($temp,4,'.','');
 }
-<<<<<<< Updated upstream
-$dayuse=500;
-=======
-$dayuse=32;
->>>>>>> Stashed changes
+$dayuse=30;
 $startDate =(new DateTime())->getTimestamp();
 
 $min[100];
@@ -47,11 +43,7 @@ for($k=0;$k<96;$k++){   ///       int random $min $max $avg for strain 96 ea
 // }
 
 // today -1 years
-<<<<<<< Updated upstream
-$today = date('d-m-Y',strtotime($today . "-1 years"));
-=======
-$today = date('d-m-Y',strtotime($today . "-32 days"));
->>>>>>> Stashed changes
+$today = date('d-m-Y',strtotime($today . "-1 months"));
 $dateArray = explode("-",$today);
 $today2 = $dateArray[2]. "-" . $dateArray[0] . "-" . $dateArray[1];
 
@@ -67,44 +59,68 @@ for($d=0;$d<$dayuse;$d++){          // day
     // echo strtotime($today);
     for($k=1;$k>=0;$k--){
             if($k==1) {
-                $dayNight=0;
-            }
-
-            else {
-                $dayNight=float_rand(1,10);
-            }
-            // n=0 day , n=1 night
-            $db->insert('daynightdata',["timestamp"=> strtotime($today)*1000,
+                $db->insert('daynightdata',["timestamp"=> strtotime($today)*1000,
             "date"=>$today2,
             "duration"=>$k,
             "sync24"=>0,
-            "SG01Avg"=> $avg[1]+$d*$slope[1]+$dayNight,
-            "SG01Max"=> $max[1]+$d*$slope[1]+$dayNight,
-            "SG01Min"=> $min[1]+$d*$slope[1]+$dayNight,
-            "SG02Avg"=> $avg[2]+$d*$slope[2]+$dayNight,
-            "SG02Max"=> $max[2]+$d*$slope[2]+$dayNight,
-            "SG02Min"=> $min[2]+$d*$slope[2]+$dayNight,
-            "SG03Avg"=> $avg[3]+$d*$slope[3]+$dayNight,
-            "SG03Max"=> $max[3]+$d*$slope[3]+$dayNight,
-            "SG03Min"=> $min[3]+$d*$slope[3]+$dayNight,
-            "SG04Avg"=> $avg[4]+$d*$slope[4]+$dayNight,
-            "SG04Max"=> $max[4]+$d*$slope[4]+$dayNight,
-            "SG04Min"=> $min[4]+$d*$slope[4]+$dayNight,
-            "SG05Avg"=> $avg[5]+$d*$slope[5]+$dayNight,
-            "SG05Max"=> $max[5]+$d*$slope[5]+$dayNight,
-            "SG05Min"=> $min[5]+$d*$slope[5]+$dayNight,
-            "SG06Avg"=> $avg[6]+$d*$slope[6]+$dayNight,
-            "SG06Max"=> $max[6]+$d*$slope[6]+$dayNight,
-            "SG06Min"=> $min[6]+$d*$slope[6]+$dayNight,
-            "SG07Avg"=> $avg[7]+$d*$slope[7]+$dayNight,
-            "SG07Max"=> $max[7]+$d*$slope[7]+$dayNight,
-            "SG07Min"=> $min[7]+$d*$slope[7]+$dayNight,
-            "SG08Avg"=> $avg[8]+$d*$slope[8]+$dayNight,
-            "SG08Max"=> $max[8]+$d*$slope[8]+$dayNight,
-            "SG08Min"=> $min[8]+$d*$slope[8]+$dayNight,
-            "SG09Avg"=> $avg[9]+$d*$slope[9]+$dayNight,
-            "SG09Max"=> $max[9]+$d*$slope[9]+$dayNight,
-            "SG09Min"=> $min[9]+$d*$slope[9]+$dayNight,
+            "SG01Avg"=> 12.7079+(rand(0,100)-50)/50,
+            "SG01Max"=> 39.1717+(rand(0,100)-50)/50,
+            "SG01Min"=>-11.0363+(rand(0,100)-50)/50,
+
+            "SG02Avg"=> -12.9409+(rand(0,100)-50)/50,
+            "SG02Max"=> 6.3699+(rand(0,100)-50)/50,
+            "SG02Min"=> -37.8129+(rand(0,100)-50)/50,
+
+            "SG03Avg"=> -7.8493+(rand(0,100)-50)/50,
+            "SG03Max"=> 15.2120+(rand(0,100)-50)/50,
+            "SG03Min"=> -24.7290+(rand(0,100)-50)/50,
+
+            "SG04Avg"=> -2.8253+(rand(0,100)-50)/50,
+            "SG04Max"=> 15.5719+(rand(0,100)-50)/50,
+            "SG04Min"=> -21.5709+(rand(0,100)-50)/50,
+
+            "SG05Avg"=> 8.7663+(rand(0,100)-50)/50,
+            "SG05Max"=> 24.2188+(rand(0,100)-50)/50,
+            "SG05Min"=> -7.1199+(rand(0,100)-50)/50,
+
+            "SG06Avg"=> -2.7337+(rand(0,100)-50)/50,
+            "SG06Max"=> 1.5874+(rand(0,100)-50)/50,
+            "SG06Min"=> -7.0344+(rand(0,100)-50)/50,
+
+            "SG07Avg"=> -3.7337+(rand(0,100)-50)/50,
+            "SG07Max"=> 1.6136+(rand(0,100)-50)/50,
+            "SG07Min"=> -8.6547+(rand(0,100)-50)/50,
+
+            "SG08Avg"=> -1.5428+(rand(0,100)-50)/50,
+            "SG08Max"=> 3.3711+(rand(0,100)-50)/50,
+            "SG08Min"=> -6.3920+(rand(0,100)-50)/50,
+
+            "SG09Avg"=> 0.8742+(rand(0,100)-50)/50,
+            "SG09Max"=> 5.0883+(rand(0,100)-50)/50,
+            "SG09Min"=> -3.5268+(rand(0,100)-50)/50,
+
+            
+            "SG10Avg"=> -1.1053+(rand(0,100)-50)/50,
+            "SG10Max"=> 3.3195+(rand(0,100)-50)/50,
+            "SG10Min"=> -5.3572+(rand(0,100)-50)/50,
+
+            "SG11Avg"=> 0.4765+(rand(0,100)-50)/50,
+            "SG11Max"=> 4.6543+(rand(0,100)-50)/50,
+            "SG11Min"=> -3.8834+(rand(0,100)-50)/50,
+
+            "SG12Avg"=> 3.0974+(rand(0,100)-50)/50,
+            "SG12Max"=> 7.2787+(rand(0,100)-50)/50,
+            "SG12Min"=> -3.5268+(rand(0,100)-50)/50,
+
+            "SG09Avg"=> 0.8742+(rand(0,100)-50)/50,
+            "SG09Max"=> 5.0883+(rand(0,100)-50)/50,
+            "SG09Min"=> -3.5268+(rand(0,100)-50)/50,
+            "SG09Avg"=> 0.8742+(rand(0,100)-50)/50,
+            "SG09Max"=> 5.0883+(rand(0,100)-50)/50,
+            "SG09Min"=> -3.5268+(rand(0,100)-50)/50,
+            "SG09Avg"=> 0.8742+(rand(0,100)-50)/50,
+            "SG09Max"=> 5.0883+(rand(0,100)-50)/50,
+            "SG09Min"=> -3.5268+(rand(0,100)-50)/50,
             "SG10Avg"=> $avg[10]+$d*$slope[10]+$dayNight,
             "SG10Max"=> $max[10]+$d*$slope[10]+$dayNight,
             "SG10Min"=> $min[10]+$d*$slope[10]+$dayNight,
@@ -372,9 +388,18 @@ for($d=0;$d<$dayuse;$d++){          // day
             "SG95Max"=> $max[95]+$d*$slope[95]+$dayNight,
             "SG95Min"=> $min[95]+$d*$slope[95]+$dayNight,
         ]);
+            }
+
+            else {
+                $dayNight=float_rand(1,10);
+            }
+          
     }
     
 }
 echo "end ";
 echo $today;
+?>
+<?php
+echo 12.7079 +(rand(0,100)-50)/50;
 ?>

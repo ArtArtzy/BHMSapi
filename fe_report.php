@@ -4,8 +4,8 @@ $_POST = json_decode(file_get_contents("php://input"),true);
 $month=$_POST['month'];
 $year=$_POST['year'];
 
-// $month= 4;
-// $year = 2022;
+//$month= 11;
+//$year = 2022;
 
 $startTimeTemp = $year . "-" . $month . "-1";
 // $startTimeTemp = "2022-4-1";

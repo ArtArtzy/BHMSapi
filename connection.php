@@ -17,7 +17,7 @@ require("Medoo.php");
 // Using Medoo namespace
 use Medoo\Medoo;
  
-
+error_reporting(E_ERROR | E_PARSE);
 
 $db = new Medoo([
 	// required

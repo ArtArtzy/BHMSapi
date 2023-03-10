@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once('connection.php');
 //ทำการ load ข้อมูลจากตาราง Adjust
 $sql = "select * from initValue order by id";
@@ -16,6 +16,8 @@ $files3 = array_diff(scandir($dirx), array('.', '..'));
 $files2 =  array_reverse(array_reverse($files3));
 
 if(count($files2) >1){
+     //parameter
+     $setLimitNan = 800;
     //load ข้อมูลไฟล์อันสุดท้าย
     $fileName = "data/". $year . "/" . $month . "/" . $files2[0];
     //ทำการถอดข้อมูลจากชื่อไฟล์
@@ -37,6 +39,9 @@ if(count($files2) >1){
     } else {
       $duration = 1;
     }
+    for($i=1;$i<=96;$i++){
+      $countG[$i] = 0;
+   }
      //ทำการ Check ว่าไฟล์ครบ 15 นาทีหรือเปล่าว ถ้าไม่ครบไม่เอาเลย ต้องมีค่า count เท่ากับ 896
      if( $file = fopen($fileName, "r") ){
         $count=0;
@@ -57,22 +62,24 @@ if(count($files2) >1){
                 if($count > 0 && strlen($line) >0){
                 $data = explode("	",$line);
                 if($count ==1){
+                  $countG[$l] = 1;
                    for($l=1;$l<=95;$l++){
-                      if($data[$l] != "NaN"){
-                        $SGmax[$l] = (float)$data[$l];
+                      if($data[$l] != "NaN" or $data[$l] != "#NUM!"){
+                        $SGmax[$l] = (float)$data[$l]; 
                         $SGmin[$l] = (float)$data[$l];
                         $SGSum[$l] = (float)$data[$l];  
   
                       } else {
-                        $SGmax[$l] = "NaN";
-                        $SGmin[$l] = "NaN";
-                        $SGSum[$l] = "NaN";  
+                        $SGmax[$l] = -100;
+                        $SGmin[$l] = 100;
+                        $SGSum[$l] = 0;  
                       }
                       
                    }
                 } else{
                   for($l=1;$l<=95;$l++){
-                     if($data[$l]!="NaN"){
+                     if($data[$l]!="NaN" or $data[$l] != "#NUM!"){
+                        $countG[$l]++;
                         if((float)$SGmax[$l]< (float)$data[$l]){
                            $SGmax[$l] = (float)$data[$l];    
                         }
@@ -81,24 +88,29 @@ if(count($files2) >1){
                            $SGmin[$l] = (float)$data[$l];
                         }
                         $SGSum[$l] += $data[$l];
-                     } else {
-                        $SGmax[$l] = "NaN";
-                        $SGmin[$l] = "NaN";
-                        $SGSum[$l] = "NaN";  
-                     }                     
+                     }                
                   }
                 }
                 }
                 $count++;
             }
             fclose($file);
+<<<<<<< Updated upstream
             // for($i=1;$i<=95;$i++){
             //    $SGavg[$i] =0;
             //    }
+=======
+            for($i=1;$i<=95;$i++){
+               if($countG[$i] < 894-$setLimitNan){
+                  $SGmin[$i] = "NaN";
+               }
+                  // echo $countG[$i] . "-";
+            }
+>>>>>>> Stashed changes
             //ทำการหาค่าเฉลี่ยข้อมูล
           for($i=1;$i<=95;$i++){
              if($SGSum[$i] != "NaN"){
-                $SGavg[$i] = number_format($SGSum[$i]/($count-2),2,".","");
+               $SGavg[$i] = number_format($SGSum[$i]/($countG[$i]),2,".","");
              } else {
                 $SGavg[$i] = "NaN";
              }
@@ -107,7 +119,12 @@ if(count($files2) >1){
          }
           //ทำการปรับค่า NaN เป็น -9999999
           for($i=1;$i<=95;$i++){
-            if($SGmin[$i]=="NaN"){
+            // if($SGmin[$i]=="NaN" && $SGmin[$i]!=0){
+            //    $SGmin[$i] = -9999999;
+            //    $SGmax[$i] = -9999999;
+            //    $SGavg[$i] = -9999999;
+            // }
+            if($SGmin[$i] == 0 && $SGmax[$i]== 0 ){
                $SGmin[$i] = -9999999;
                $SGmax[$i] = -9999999;
                $SGavg[$i] = -9999999;
@@ -123,12 +140,11 @@ if(count($files2) >1){
              //ทำการใส่ตาราง
              for($i=1;$i<=95;$i++){
                  $db->update("showdata",[
-                    "initvalue"=>$SGmax[$i]
+                    "initvalue"=>$SGavg[$i]
                  ],[
                      "id"=>$i
                  ]);
              }
-
      //update database
      $db->insert("rawdata",[
       "SG01Avg"=> $SGavg[1],
